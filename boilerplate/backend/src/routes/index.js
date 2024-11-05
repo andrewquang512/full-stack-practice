@@ -1,13 +1,18 @@
 const express = require('express')
 const docsRoute = require('./docs.route')
-const productRoute = require('./product.route')
+const memberRoute = require('./member.route')
+const ticketRoute = require('./ticket.route')
 
 const router = express.Router()
 
 const defaultRoutes = [
   {
-    path: '/product',
-    route: productRoute
+    path: '/member',
+    route: memberRoute
+  },
+  {
+    path: '/ticket',
+    route: ticketRoute
   },
   {
     path: '/docs',

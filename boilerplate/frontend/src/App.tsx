@@ -1,16 +1,25 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import TicketList from './components/TicketList.component';
 import TicketForm from './components/TicketForm.component';
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
 
-const App = () => {
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <TicketList/>,
+  },
+  {
+    path: "/create",
+    element: <TicketForm/>,
+  },
+]);
+
+const App: React.FC = () => {
   return (
-    <Router>
-      <Switch>
-        <Route path="/" exact component={TicketList} />
-        <Route path="/create" component={TicketForm} />
-      </Switch>
-    </Router>
+      <RouterProvider router={router} />
   );
 };
 

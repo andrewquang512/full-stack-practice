@@ -1,5 +1,5 @@
 {
-  "name": "get-pagination-api",
+  "name": "boilerplate-frontend",
   "version": "1.0.0",
   "description": "",
   "main": "src/index.js",
@@ -14,7 +14,8 @@
     "lint:fix": "eslint . --fix",
     "prettier": "prettier --check **/*.js",
     "prettier:fix": "prettier --write **/*.js",
-    "docker": "docker-compose -f docker-compose.yml -f docker-compose.yml up"
+    "database": "npx prisma generate --schema=src/prisma/schema.prisma",
+    "sync:database": "npx prisma db push --schema=src/prisma/schema.prisma"
   },
   "dependencies": {
     "@faker-js/faker": "^9.1.0",

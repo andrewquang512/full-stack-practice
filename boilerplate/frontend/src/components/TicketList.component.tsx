@@ -1,14 +1,23 @@
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const TicketList = () => {
-  const [tickets, setTickets] = useState([]);
+interface Ticket {
+  _id: string;
+  title: string;
+  status: string;
+}
+
+const TicketList: React.FC = () => {
+  const [tickets, setTickets] = useState<Ticket[]>([]);
 
   useEffect(() => {
     const fetchTickets = async () => {
-      const result = await axios.get('/api/tickets');
-      setTickets(result.data);
+      try {
+        const result = await axios.get('/api/tickets');
+        setTickets(result.data);
+      } catch (error) {
+        console.error('Error fetching tickets:', error);
+      }
     };
     fetchTickets();
   }, []);
@@ -17,7 +26,7 @@ const TicketList = () => {
     <div>
       <h1>Kanban Tickets</h1>
       <ul>
-        {tickets.map(ticket => (
+        {tickets.map((ticket) => (
           <li key={ticket._id}>{ticket.title} - {ticket.status}</li>
         ))}
       </ul>
