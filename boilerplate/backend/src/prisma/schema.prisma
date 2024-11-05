@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Ticket {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  status      Status   @default(OPEN)
+  assigner    Member   @relation(fields: [assigner_id], references: [id], name: "assigned_member")
+  assignee    Member   @relation(fields: [assignee_id], references: [id], name: "created_member")
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  assigner_id String   @db.ObjectId
+  assignee_id String   @db.ObjectId
+}
+
+enum Status {
+  OPEN
+  REOPEN
+  IN_PROGRESS
+  TESTING
+  DONE
+}
+
+model Member {
+  id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+  name                String
+  created_at          DateTime @default(now())
+  updated_at          DateTime @updatedAt
+  ticket_created_ids  String[] @db.ObjectId
+  ticket_created      Ticket[] @relation(name: "assigned_member")
+  ticket_assigned_ids String[] @db.ObjectId
+  ticket_assigned     Ticket[] @relation(name: "created_member")
+}
