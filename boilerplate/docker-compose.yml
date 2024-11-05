@@ -1,46 +1,45 @@
-services: 
+services:
   express:
-    build: 
+    build:
       context: backend
     container_name: backend
-    working_dir: /usr/src/app
-    networks: 
+    environment:
+      - PORT=3000
+      - DATABASE_URL="mongodb+srv://andrewviquang:lq6sAzk9hVue5wlq@labcluster.jxghisa.mongodb.net/boilerplate?retryWrites=true&w=majority&appName=LabCluster"
+    networks:
       - node-network
-    volumes: 
+    volumes:
       - ./backend:/usr/src/app
     tty: true
-    ports: 
-      - "3000:3000"
-    command: npm run dev
+    ports:
+      - '3000:3000'
 
   react:
-    build: 
+    build:
       context: frontend
     container_name: frontend
-    working_dir: /usr/src/app
-    networks: 
+    networks:
       - node-network
-    volumes: 
+    volumes:
       - ./frontend:/usr/src/app
     tty: true
-    ports: 
-      - "8080:8080"
-    command: npm run dev
+    ports:
+      - '8080:8080'
 
   nginx:
-    build: 
+    build:
       context: nginx
     container_name: nginx
     restart: always
     tty: true
-    ports: 
-      - "8000:80"
-    networks: 
+    ports:
+      - '8000:80'
+    networks:
       - node-network
     depends_on:
-       - express
-       - react
-  
-networks: 
+      - express
+      - react
+
+networks:
   node-network:
     driver: bridge

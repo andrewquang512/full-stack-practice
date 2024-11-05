@@ -6,6 +6,10 @@ COPY package*.json ./
 
 COPY . .
 
-RUN npm install
+RUN npm run database
+
+RUN npm install --omit=dev
 
 EXPOSE 3000
+
+CMD [ "npm", "run", "start" ]

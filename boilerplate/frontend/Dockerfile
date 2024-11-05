@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM node:alpine
 
 WORKDIR /usr/src/app
 
@@ -11,6 +11,8 @@ RUN npm i -g serve
 COPY . .
 
 RUN npm run build
+
+
 
 EXPOSE 8080
 
